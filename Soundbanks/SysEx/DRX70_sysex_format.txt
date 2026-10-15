@@ -1,0 +1,138 @@
+DRX-70 Sysex-sanomat                      1.1.2022
+
+Sanoman yleisrakenne:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 tt = sanoman tyyppi
+ 3 dd = datatavut, vaihteleva määrä
+ ...
+ n F7 = Sysex end
+
+Sanomatyypit:
+
+- PC -> DRX:
+01 = download patch to DRX
+02 = download drumkit to DRX
+03 = set single patch parameter
+04 = set single drumkit parameter
+05 = set single settings parameter
+06 = request current patch
+07 = request current drumkit
+
+- DRX -> PC:
+11 = upload current patch from DRX
+12 = upload current drumkit from DRX
+
+Sanomien rakenteet:
+
+Download patch to DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 01 = sanoman tyyppi
+ 3 pp = pppp: patch nr, 11-bit encoding
+ 4 pp 
+ 5 nn = nn...nn: patch name as ASCII, 10 chars
+ ...
+14 nn
+15 00 = name end marker
+16 01 = SCMD_NEW_PATCH
+17 dd = patch data, 69 bytes
+ ...
+85 dd
+86 F7 = Sysex end
+
+Download drumkit to DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 02 = sanoman tyyppi
+ 3 kk = kk = drumkit nr
+ 4 nn = nn...nn: drumkit name as ASCII, 10 chars
+ ...
+13 nn
+14 00 = name end marker
+15 02 = SCMD_NEW_DRUMKIT
+16 dd = drumkit data, 105 bytes
+ ...    s_start and s_end use 11-bit encoding
+120 dd
+121 F7 = Sysex end
+
+Set single patch parameter to DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 03 = sanoman tyyppi
+ 3 ss = SCMD_SET_XXXXX (parameter id)
+ 4 op = operator nr 0...3, must be 0 in non-operator specific parameters 
+ 5 dd = parameter value
+ 6 F7 = Sysex end
+
+Set single drumkit parameter to DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 04 = sanoman tyyppi
+ 3 ss = SCMD_SET_XXXXX (parameter id)
+ 4 ii = instrument nr 0...20
+ 5 dd = dddd: parameter value, 11-bit encoding
+ 6 dd 
+ 7 F7 = Sysex end
+
+Set single settings parameter to DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 05 = sanoman tyyppi
+ 3 ss = SCMD_SET_XXXXX (parameter id)
+ 4 dd = parameter value
+ 5 F7 = Sysex end
+
+Request current patch to DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 06 = sanoman tyyppi
+ 3 F7 = Sysex end
+
+Request current drumkit to DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 07 = sanoman tyyppi
+ 3 F7 = Sysex end
+
+Upload current patch from DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 11 = sanoman tyyppi
+ 3 pp = pppp: patch nr, 11-bit encoding
+ 4 pp 
+ 5 nn = nn...nn: patch name as ASCII, 10 chars
+ ...
+14 nn
+15 00 = name end marker
+16 01 = SCMD_NEW_PATCH
+17 dd = patch data, 69 bytes
+ ...
+85 dd
+86 F7 = Sysex end
+
+Upload current drumkit from DRX:
+
+ 0 F0 = Sysex start
+ 1 7D = manufacturer id: experimental
+ 2 12 = sanoman tyyppi
+ 3 kk = kk = drumkit nr
+ 4 nn = nn...nn: drumkit name as ASCII, 10 chars
+ ...
+13 nn
+14 00 = name end marker
+15 02 = SCMD_NEW_DRUMKIT
+16 dd = drumkit data, 105 bytes
+ ...    s_start and s_end use 11-bit encoding
+120 dd
+121 F7 = Sysex end
+

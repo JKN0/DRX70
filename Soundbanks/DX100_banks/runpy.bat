@@ -1,0 +1,1 @@
+\Python\Python3.12\python %1 %2 %3 %4 %5
