@@ -25,7 +25,7 @@ Files:
 - Soundbanks: current soundbanks and conversion scripts
 
 
-More details of the project: 
+More details of the project: https://hackaday.io/project/207035-drx70-fm-synthesizer-module
 
-Short sound demo: 
+Short sound demo: https://www.youtube.com/watch?v=fnx1b2eMlik
 
